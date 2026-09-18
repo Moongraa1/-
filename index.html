@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Шпион">
+  <title>Шпион: Ложная Локация</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ЭКРАН 1: НАСТРОЙКИ -->
+    <section id="screen-setup" class="screen active">
+      <header class="app-header">
+        <h1 class="app-title">🕵️ Шпион</h1>
+        <p class="app-subtitle">Ложная локация</p>
+      </header>
+
+      <div class="scroll-area">
+        <!-- Количество игроков -->
+        <div class="card">
+          <label class="card-label" for="players-count">Количество игроков</label>
+          <div class="stepper">
+            <button type="button" class="stepper-btn" id="players-minus" aria-label="Меньше">−</button>
+            <span class="stepper-value" id="players-count">4</span>
+            <button type="button" class="stepper-btn" id="players-plus" aria-label="Больше">+</button>
+          </div>
+          <p class="hint">От 3 до 12 игроков</p>
+        </div>
+
+        <!-- Имена игроков -->
+        <div class="card">
+          <label class="card-label">Имена игроков</label>
+          <div id="players-names" class="players-names"></div>
+        </div>
+
+        <!-- Категории -->
+        <div class="card">
+          <label class="card-label">Категории локаций</label>
+          <div id="categories-list" class="categories-list"></div>
+          <p class="hint" id="categories-hint">Выберите хотя бы одну категорию</p>
+        </div>
+
+        <!-- Кастомные локации -->
+        <div class="card">
+          <label class="card-label">Добавить свою пару локаций</label>
+          <input type="text" id="custom-main" class="input" placeholder="Основная локация" autocomplete="off">
+          <input type="text" id="custom-fake" class="input" placeholder="Похожая локация" autocomplete="off">
+          <select id="custom-category" class="input select"></select>
+          <button type="button" id="add-custom-btn" class="btn btn-secondary">Добавить пару</button>
+          <div id="custom-list" class="custom-list"></div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <button type="button" id="start-game-btn" class="btn btn-primary btn-large">Начать игру</button>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 2: ПЕРЕДАЧА УСТРОЙСТВА -->
+    <section id="screen-pass" class="screen">
+      <div class="center-content">
+        <div class="pass-icon">📱</div>
+        <h2 class="screen-title">Передайте телефон</h2>
+        <p class="pass-name" id="pass-player-name">Игрок 1</p>
+        <p class="warning">Не показывайте экран другим!</p>
+        <button type="button" id="show-role-btn" class="btn btn-primary btn-large">Посмотреть локацию</button>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 3: ПРОСМОТР РОЛИ -->
+    <section id="screen-role" class="screen">
+      <div class="center-content">
+        <h2 class="screen-title" id="role-player-name">Игрок 1</h2>
+        <div class="role-card" id="role-card">
+          <span class="role-label">Ваша локация</span>
+          <span class="role-location" id="role-location">Пляж</span>
+        </div>
+        <p class="hint">Запомни локацию и передай телефон дальше</p>
+        <button type="button" id="hide-role-btn" class="btn btn-primary btn-large">Скрыть и передать</button>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 4: ИГРА НАЧАЛАСЬ -->
+    <section id="screen-game" class="screen">
+      <div class="center-content">
+        <div class="game-icon">🎮</div>
+        <h2 class="screen-title">Игра началась!</h2>
+        <div class="card rules-card">
+          <p class="rules-text">
+            Задавайте друг другу вопросы о локации по кругу.
+            Шпион не знает настоящую локацию — он должен угадать её по ответам.
+            Обычные игроки должны вычислить шпиона.
+          </p>
+        </div>
+        <p class="first-player">Первым задаёт вопрос:<br><strong id="first-player-name">Игрок 1</strong></p>
+        <button type="button" id="next-round-btn" class="btn btn-primary btn-large">Завершить раунд / Следующий раунд</button>
+        <button type="button" id="to-menu-btn" class="btn btn-ghost">В главное меню</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    // Регистрация Service Worker для офлайн-режима (PWA)
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("sw.js")
+          .catch((err) => console.warn("Service Worker не зарегистрирован:", err));
+      });
+    }
+  </script>
+</body>
+</html>

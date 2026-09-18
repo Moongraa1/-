@@ -1,0 +1,20 @@
+{
+  "name": "Шпион: Ложная Локация",
+  "short_name": "Шпион",
+  "description": "Компанейская игра на одном устройстве: вычислите шпиона, который не знает настоящую локацию.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSI5NiIgZmlsbD0iIzFhMWEyZSIvPjxjaXJjbGUgY3g9IjI1NiIgY3k9IjI0MCIgcj0iMTAwIiBmaWxsPSIjNjM2NmYxIi8+PHBhdGggZD0iTTE1NiAxODBhMTAwIDEwMCAwIDAgMCAyMDAgMCIgc3Ryb2tlPSIjMWExYTJlIiBzdHJva2Utd2lkdGg9IjI4IiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iMjU2IiBjeT0iMjQwIiByPSI0MCIgZmlsbD0iI2UyZThmMCIvPjxwYXRoIGQ9Ik0xOTAgNDIwaDEzMmEyNCAyNCAwIDAgMSAyNCAyNHY0OEgxNjZ2LTQ4YTI0IDI0IDAgMCAxIDI0LTI0eiIgZmlsbD0iIzYzNjZmMSIvPjx0ZXh0IHg9IjI1NiIgeT0iNDk4IiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI2NCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNlMmU4ZjAiPjwvdGV4dD48L3N2Zz4=",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
