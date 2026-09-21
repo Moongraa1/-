@@ -1,13 +1,13 @@
 {
-  "name": "Шпион: Ложная Локация",
-  "short_name": "Шпион",
-  "description": "Компанейская игра на одном устройстве: вычислите шпиона, который не знает настоящую локацию.",
+  "name": "Вечеринка Игр: Шпион, Мафия и Элиас",
+  "short_name": "Вечеринка Игр",
+  "description": "Компанейские игры на одном устройстве: Шпион, Мафия с ведущим и Элиас со словами на время.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#1a1a2e",
-  "theme_color": "#1a1a2e",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
   "lang": "ru",
   "icons": [
     {

@@ -3,27 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#1a1a2e">
+  <meta name="theme-color" content="#0b0f19">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Шпион">
-  <title>Шпион: Ложная Локация</title>
+  <meta name="apple-mobile-web-app-title" content="Вечеринка Игр">
+  <title>Игры для компании: Шпион, Мафия и Элиас</title>
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
-  <div class="app">
+  <div class="app" id="app-root">
 
-    <!-- ЭКРАН 1: НАСТРОЙКИ -->
-    <section id="screen-setup" class="screen active">
+    <!-- ===== ЭКРАН 0: ГЛАВНОЕ МЕНЮ ===== -->
+    <section id="screen-menu" class="screen active">
       <header class="app-header">
-        <h1 class="app-title">🕵️ Шпион</h1>
-        <p class="app-subtitle">Ложная локация</p>
+        <div class="header-tag">Party Games</div>
+        <h1 class="app-title">🎲 Вечеринка Игр</h1>
+        <p class="app-subtitle">Выберите игру для вашей компании</p>
       </header>
 
       <div class="scroll-area">
-        <!-- Количество игроков -->
+        <div class="menu-grid">
+          <!-- Карточка Шпион -->
+          <div class="game-card game-card--spy" id="card-spy" role="button" tabindex="0">
+            <div class="game-card__badge game-card__badge--active">3-12 игроков</div>
+            <div class="game-card__icon">🕵️</div>
+            <div class="game-card__info">
+              <h2 class="game-card__title">Шпион</h2>
+              <p class="game-card__desc">Секретная локация для всех и блеф шпиона! Задавайте каверзные вопросы.</p>
+            </div>
+            <div class="game-card__action">Играть →</div>
+          </div>
+
+          <!-- Карточка Мафия -->
+          <div class="game-card game-card--mafia" id="card-mafia" role="button" tabindex="0">
+            <div class="game-card__badge game-card__badge--popular">От 4 игроков</div>
+            <div class="game-card__icon">🎩</div>
+            <div class="game-card__info">
+              <h2 class="game-card__title">Мафия</h2>
+              <p class="game-card__desc">Классика детективных игр с раздачей ролей и удобной панелью ведущего.</p>
+            </div>
+            <div class="game-card__action">Играть →</div>
+          </div>
+
+          <!-- Карточка Элиас -->
+          <div class="game-card game-card--elias" id="card-elias" role="button" tabindex="0">
+            <div class="game-card__badge game-card__badge--active">2-4 команды</div>
+            <div class="game-card__icon">🗣️</div>
+            <div class="game-card__info">
+              <h2 class="game-card__title">Элиас</h2>
+              <p class="game-card__desc">Объясняйте слова на время без однокоренных! 3 уровня сложности.</p>
+            </div>
+            <div class="game-card__action">Играть →</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 1: НАСТРОЙКИ ШПИОНА ===== -->
+    <section id="screen-setup" class="screen">
+      <header class="app-header with-back">
+        <button type="button" class="back-btn" id="spy-back-to-menu-btn" aria-label="Назад в меню">← В меню</button>
+        <div class="header-center">
+          <h1 class="app-title">🕵️ Шпион</h1>
+          <p class="app-subtitle">Вычислите шпиона</p>
+        </div>
+      </header>
+
+      <div class="scroll-area">
         <div class="card">
           <label class="card-label" for="players-count">Количество игроков</label>
           <div class="stepper">
@@ -31,29 +79,25 @@
             <span class="stepper-value" id="players-count">4</span>
             <button type="button" class="stepper-btn" id="players-plus" aria-label="Больше">+</button>
           </div>
-          <p class="hint">От 3 до 12 игроков</p>
+          <p class="hint">От 3 до 12 игроков (1 случайный шпион)</p>
         </div>
 
-        <!-- Имена игроков -->
         <div class="card">
           <label class="card-label">Имена игроков</label>
           <div id="players-names" class="players-names"></div>
         </div>
 
-        <!-- Категории -->
         <div class="card">
           <label class="card-label">Категории локаций</label>
           <div id="categories-list" class="categories-list"></div>
           <p class="hint" id="categories-hint">Выберите хотя бы одну категорию</p>
         </div>
 
-        <!-- Кастомные локации -->
         <div class="card">
-          <label class="card-label">Добавить свою пару локаций</label>
-          <input type="text" id="custom-main" class="input" placeholder="Основная локация" autocomplete="off">
-          <input type="text" id="custom-fake" class="input" placeholder="Похожая локация" autocomplete="off">
+          <label class="card-label">Добавить свою локацию</label>
+          <input type="text" id="custom-location-input" class="input" placeholder="Название места (напр. Аквапарк)" autocomplete="off">
           <select id="custom-category" class="input select"></select>
-          <button type="button" id="add-custom-btn" class="btn btn-secondary">Добавить пару</button>
+          <button type="button" id="add-custom-btn" class="btn btn-secondary">Добавить локацию</button>
           <div id="custom-list" class="custom-list"></div>
         </div>
       </div>
@@ -63,59 +107,413 @@
       </div>
     </section>
 
-    <!-- ЭКРАН 2: ПЕРЕДАЧА УСТРОЙСТВА -->
+    <!-- ===== ЭКРАН 2: ПЕРЕДАЧА (ШПИОН) ===== -->
     <section id="screen-pass" class="screen">
       <div class="center-content">
         <div class="pass-icon">📱</div>
         <h2 class="screen-title">Передайте телефон</h2>
         <p class="pass-name" id="pass-player-name">Игрок 1</p>
-        <p class="warning">Не показывайте экран другим!</p>
+        <p class="warning">Не показывайте экран другим игрокам!</p>
         <button type="button" id="show-role-btn" class="btn btn-primary btn-large">Посмотреть локацию</button>
       </div>
     </section>
 
-    <!-- ЭКРАН 3: ПРОСМОТР РОЛИ -->
+    <!-- ===== ЭКРАН 3: ПРОСМОТР РОЛИ (ШПИОН) ===== -->
     <section id="screen-role" class="screen">
       <div class="center-content">
         <h2 class="screen-title" id="role-player-name">Игрок 1</h2>
-        <div class="role-card" id="role-card">
-          <span class="role-label">Ваша локация</span>
-          <span class="role-location" id="role-location">Пляж</span>
+
+        <!-- Карточка обычной локации -->
+        <div class="role-card" id="role-normal-card">
+          <span class="role-label">Секретная локация</span>
+          <span class="role-location" id="role-location">Больница</span>
+          <p class="role-subhint">Вы мирный игрок. Запомните место и не дайте шпиону понять его!</p>
         </div>
-        <p class="hint">Запомни локацию и передай телефон дальше</p>
+
+        <!-- Карточка шпиона -->
+        <div class="role-card role-card--spy hidden" id="role-spy-card">
+          <span class="role-label">Ваша роль</span>
+          <span class="role-location">🕵️ Ты — ШПИОН!</span>
+          <p class="role-subhint">Вы не знаете локацию. Слушайте вопросы других игроков, блефуйте и попытайтесь угадать место!</p>
+        </div>
+
+        <p class="hint">Запомните информацию и передайте телефон дальше</p>
         <button type="button" id="hide-role-btn" class="btn btn-primary btn-large">Скрыть и передать</button>
       </div>
     </section>
 
-    <!-- ЭКРАН 4: ИГРА НАЧАЛАСЬ -->
+    <!-- ===== ЭКРАН 4: ИГРА (ШПИОН) ===== -->
     <section id="screen-game" class="screen">
       <div class="center-content">
         <div class="game-icon">🎮</div>
         <h2 class="screen-title">Игра началась!</h2>
         <div class="card rules-card">
-          <p class="rules-text">
-            Задавайте друг другу вопросы о локации по кругу.
-            Шпион не знает настоящую локацию — он должен угадать её по ответам.
-            Обычные игроки должны вычислить шпиона.
-          </p>
+          <p class="rules-text">Задавайте друг другу наводящие вопросы о локации по кругу. Шпион не знает локацию и должен не выдать себя либо назвать место!</p>
         </div>
         <p class="first-player">Первым задаёт вопрос:<br><strong id="first-player-name">Игрок 1</strong></p>
-        <button type="button" id="next-round-btn" class="btn btn-primary btn-large">Завершить раунд / Следующий раунд</button>
-        <button type="button" id="to-menu-btn" class="btn btn-ghost">В главное меню</button>
+        <button type="button" id="next-round-btn" class="btn btn-primary btn-large">Следующий раунд</button>
+        <button type="button" id="spy-game-to-menu-btn" class="btn btn-ghost">← В главное меню</button>
       </div>
     </section>
 
+    <!-- ===== ЭКРАН 5: НАСТРОЙКИ МАФИИ ===== -->
+    <section id="screen-mafia-setup" class="screen">
+      <header class="app-header with-back">
+        <button type="button" class="back-btn" id="mafia-back-to-menu-btn" aria-label="Назад в меню">← В меню</button>
+        <div class="header-center">
+          <h1 class="app-title">🎩 Мафия</h1>
+          <p class="app-subtitle">Настройка состава игры</p>
+        </div>
+      </header>
+
+      <div class="scroll-area">
+        <div class="card">
+          <label class="card-label" for="mafia-players-count">Количество игроков</label>
+          <div class="stepper">
+            <button type="button" class="stepper-btn" id="mafia-players-minus" aria-label="Меньше">−</button>
+            <span class="stepper-value" id="mafia-players-count">8</span>
+            <button type="button" class="stepper-btn" id="mafia-players-plus" aria-label="Больше">+</button>
+          </div>
+          <p class="hint">Минимум 4 игрока</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header-flex">
+            <label class="card-label">Имена игроков</label>
+            <span class="card-count-badge" id="mafia-names-count">8 игроков</span>
+          </div>
+          <div id="mafia-players-names" class="players-names"></div>
+        </div>
+
+        <div class="card">
+          <label class="card-label">Специальные роли</label>
+          <div id="mafia-roles-config" class="roles-config"></div>
+
+          <div class="civilians-status-box" id="mafia-civilians-box">
+            <div class="civilians-status-icon">👥</div>
+            <div class="civilians-status-info">
+              <span class="civilians-status-title">Мирные жители</span>
+              <span class="civilians-status-sub">Автоматический остаток</span>
+            </div>
+            <div class="civilians-status-count" id="mafia-civilian-count">4</div>
+          </div>
+
+          <div id="mafia-roles-error" class="validation-error hidden">
+            ⚠️ Количество спец-ролей превышает общее число игроков! Уменьшите роли или увеличьте число игроков.
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <button type="button" id="mafia-start-btn" class="btn btn-primary btn-large">Начать игру (выдать роли)</button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 6: ВЫДАЧА РОЛЕЙ МАФИИ ===== -->
+    <section id="screen-mafia-reveal" class="screen">
+      <header class="reveal-header">
+        <div class="reveal-progress" id="mafia-reveal-progress">Игрок 1 из 8</div>
+        <div class="reveal-player-title" id="mafia-reveal-player-name">Игрок 1</div>
+        <p class="reveal-warning">Возьмите телефон и убедитесь, что никто не смотрит</p>
+      </header>
+
+      <div class="reveal-body">
+        <div class="mafia-card-container" id="mafia-card-container">
+          <div class="mafia-card" id="mafia-role-card">
+            <div class="mafia-card-face mafia-card-face--back">
+              <div class="card-lock-icon">🔒</div>
+              <div class="card-lock-title">Ваша секретная роль</div>
+              <p class="card-lock-hint">Нажмите на карту или кнопку ниже, чтобы посмотреть свою роль</p>
+              <div class="card-tap-indicator">👆 Нажмите для открытия</div>
+            </div>
+
+            <div class="mafia-card-face mafia-card-face--front" id="mafia-card-front">
+              <div class="role-team-pill" id="mafia-role-team-badge">Команда</div>
+              <div class="role-icon-large" id="mafia-role-icon">🎩</div>
+              <h2 class="role-name-large" id="mafia-role-name">Дон Мафии</h2>
+              <div class="role-desc-box">
+                <p class="role-desc-text" id="mafia-role-desc">Описание механики роли появится здесь...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <button type="button" id="mafia-toggle-role-btn" class="btn btn-primary btn-large">Посмотреть роль</button>
+        <button type="button" id="mafia-pass-next-btn" class="btn btn-accent btn-large hidden">Скрыть и передать →</button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 7: БЕЗОПАСНАЯ ПЕРЕДАЧА ВЕДУЩЕМУ ===== -->
+    <section id="screen-mafia-handoff" class="screen">
+      <div class="center-content">
+        <div class="pass-icon pulse-anim">🎩</div>
+        <h2 class="screen-title">Передайте телефон Ведущему</h2>
+        <div class="card rules-card">
+          <p class="rules-text">Все игроки узнали свои роли и получили инструкции. На экране ничего не раскрыто.</p>
+        </div>
+        <p class="warning">Город засыпает... Ведущий берет управление игрой в свои руки!</p>
+        <button type="button" id="mafia-host-enter-btn" class="btn btn-primary btn-large">Я ведущий — открыть панель</button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 8: ПАНЕЛЬ ВЕДУЩЕГО (МАФИЯ) ===== -->
+    <section id="screen-mafia-host" class="screen">
+      <header class="app-header host-header">
+        <div class="host-header-top">
+          <div class="host-title-group">
+            <h1 class="app-title">🎩 Панель ведущего</h1>
+            <p class="app-subtitle" id="mafia-game-phase-label">Фаза: Ночь 1</p>
+          </div>
+          <button type="button" class="phase-toggle-btn" id="mafia-phase-toggle-btn">
+            <span class="phase-toggle-icon" id="mafia-phase-icon">🌙</span>
+            <span class="phase-toggle-text" id="mafia-phase-text">Сейчас НОЧЬ</span>
+          </button>
+        </div>
+
+        <div class="host-stats-bar">
+          <div class="host-stat-item">
+            <span class="host-stat-num" id="stat-alive-total">8</span>
+            <span class="host-stat-label">Живых всего</span>
+          </div>
+          <div class="host-stat-divider"></div>
+          <div class="host-stat-item host-stat-item--mafia">
+            <span class="host-stat-num" id="stat-alive-mafia">2</span>
+            <span class="host-stat-label">Мафия</span>
+          </div>
+          <div class="host-stat-divider"></div>
+          <div class="host-stat-item host-stat-item--peace">
+            <span class="host-stat-num" id="stat-alive-peace">6</span>
+            <span class="host-stat-label">Мирные / Др.</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="scroll-area host-scroll-area">
+        <div class="card host-card">
+          <div class="card-header-flex">
+            <label class="card-label">Список участников</label>
+            <span class="hint-small">Нажмите кнопку статуса для переключения</span>
+          </div>
+          <div id="mafia-host-players-list" class="host-players-list"></div>
+        </div>
+
+        <div class="card host-card">
+          <div class="card-header-flex">
+            <label class="card-label" for="mafia-host-notes">Заметки ведущего</label>
+            <button type="button" class="btn-clear-notes" id="mafia-clear-notes-btn">Очистить</button>
+          </div>
+          <textarea id="mafia-host-notes" class="input host-notes-textarea" placeholder="Записывайте ночные убийства, проверки шерифа, алиби и результаты дневного голосования..."></textarea>
+        </div>
+      </div>
+
+      <div class="footer-bar host-footer">
+        <button type="button" id="mafia-end-game-btn" class="btn btn-danger-outline btn-large">Завершить игру</button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 9: НАСТРОЙКИ ЭЛИАСА ===== -->
+    <section id="screen-alias-setup" class="screen">
+      <header class="app-header with-back">
+        <button type="button" class="back-btn" id="alias-back-to-menu-btn" aria-label="Назад в меню">← В меню</button>
+        <div class="header-center">
+          <h1 class="app-title">🗣️ Элиас</h1>
+          <p class="app-subtitle">Настройка команд и правил</p>
+        </div>
+      </header>
+
+      <div class="scroll-area">
+        <!-- Количество и названия команд -->
+        <div class="card">
+          <label class="card-label">Количество команд</label>
+          <div class="stepper">
+            <button type="button" class="stepper-btn" id="alias-teams-minus" aria-label="Меньше">−</button>
+            <span class="stepper-value" id="alias-teams-count">2</span>
+            <button type="button" class="stepper-btn" id="alias-teams-plus" aria-label="Больше">+</button>
+          </div>
+          <p class="hint">От 2 до 4 команд</p>
+
+          <label class="card-label" style="margin-top: 14px;">Названия команд</label>
+          <div id="alias-teams-inputs" class="players-names"></div>
+        </div>
+
+        <!-- Уровень сложности -->
+        <div class="card">
+          <label class="card-label">Сложность слов</label>
+          <div class="chips-group" id="alias-diff-selector">
+            <button type="button" class="chip chip--active" data-diff="easy">
+              <span class="chip-icon">🟢</span>
+              <span class="chip-label">Легкий</span>
+              <span class="chip-desc">Быт, животные, предметы</span>
+            </button>
+            <button type="button" class="chip" data-diff="medium">
+              <span class="chip-icon">🟡</span>
+              <span class="chip-label">Средний</span>
+              <span class="chip-desc">Профессии, действия, понятия</span>
+            </button>
+            <button type="button" class="chip" data-diff="hard">
+              <span class="chip-icon">🔴</span>
+              <span class="chip-label">Сложный</span>
+              <span class="chip-desc">Термины, сленг, концепции</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Параметры раунда -->
+        <div class="card">
+          <label class="card-label">Время раунда</label>
+          <div class="segmented-control" id="alias-time-selector">
+            <button type="button" class="segmented-btn" data-time="30">30 сек</button>
+            <button type="button" class="segmented-btn active" data-time="60">60 сек</button>
+            <button type="button" class="segmented-btn" data-time="90">90 сек</button>
+          </div>
+
+          <label class="card-label" style="margin-top: 16px;">Очков для победы</label>
+          <div class="segmented-control" id="alias-score-selector">
+            <button type="button" class="segmented-btn" data-score="30">30</button>
+            <button type="button" class="segmented-btn active" data-score="50">50</button>
+            <button type="button" class="segmented-btn" data-score="100">100</button>
+          </div>
+
+          <div class="toggle-setting-row" style="margin-top: 18px;">
+            <div class="toggle-setting-info">
+              <span class="toggle-setting-title">Штраф за пропуск</span>
+              <span class="toggle-setting-desc">Каждый пропуск отнимает 1 очко</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="alias-penalty-toggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <button type="button" id="alias-start-setup-btn" class="btn btn-primary btn-large">Далее к игре →</button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 10: ГОТОВНОСТЬ К РАУНДУ (ЭЛИАС) ===== -->
+    <section id="screen-alias-ready" class="screen">
+      <header class="app-header with-back">
+        <button type="button" class="back-btn" id="alias-ready-to-menu-btn" aria-label="Назад в меню">← В меню</button>
+        <div class="header-center">
+          <h1 class="app-title">🗣️ Элиас</h1>
+          <p class="app-subtitle">Подготовка к ходу</p>
+        </div>
+      </header>
+
+      <div class="scroll-area">
+        <!-- Карточка активной команды -->
+        <div class="card alias-current-team-card">
+          <div class="alias-turn-badge">Сейчас объясняет</div>
+          <h2 class="alias-active-team-title" id="alias-ready-team-name">Команда 1</h2>
+          <p class="alias-turn-hint">Возьмите телефон. Объясняйте слова любыми способами, не используя однокоренные!</p>
+        </div>
+
+        <!-- Турнирная таблица -->
+        <div class="card">
+          <div class="card-header-flex">
+            <label class="card-label">Турнирная таблица</label>
+            <span class="card-count-badge" id="alias-ready-target-info">Цель: 50 очков</span>
+          </div>
+          <div id="alias-ready-scoreboard" class="alias-scoreboard-list"></div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <button type="button" id="alias-ready-start-btn" class="btn btn-primary btn-large">▶️ Начать раунд</button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 11: АКТИВНЫЙ РАУНД (ЭЛИАС) ===== -->
+    <section id="screen-alias-game" class="screen screen-alias-active-game">
+      <!-- Верхняя панель раунда -->
+      <div class="alias-game-topbar">
+        <div class="alias-game-team-pill" id="alias-game-team-pill">Команда 1</div>
+        <div class="alias-game-score-badge" id="alias-game-score-badge">+0</div>
+      </div>
+
+      <!-- Таймер обратного отсчета -->
+      <div class="alias-timer-container">
+        <div class="alias-timer-bubble" id="alias-game-timer">60</div>
+      </div>
+
+      <!-- Карточка со словом -->
+      <div class="alias-word-area">
+        <div class="alias-word-card" id="alias-word-card">
+          <span class="alias-word-difficulty" id="alias-word-diff-label">Слово</span>
+          <div class="alias-word-text" id="alias-word-text">Загрузка...</div>
+        </div>
+      </div>
+
+      <!-- Сенсорные кнопки управления -->
+      <div class="alias-game-controls">
+        <button type="button" class="alias-action-btn alias-action-btn--skip" id="alias-btn-skip">
+          <span class="alias-btn-icon">❌</span>
+          <span class="alias-btn-text">Пропустить</span>
+        </button>
+        <button type="button" class="alias-action-btn alias-action-btn--correct" id="alias-btn-correct">
+          <span class="alias-btn-icon">✅</span>
+          <span class="alias-btn-text">Угадано</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 12: ИТОГИ РАУНДА (ЭЛИАС) ===== -->
+    <section id="screen-alias-round-review" class="screen">
+      <header class="app-header">
+        <h1 class="app-title">Время вышло! ⏱️</h1>
+        <p class="app-subtitle" id="alias-review-subtitle">Команда 1</p>
+        <div class="alias-review-total-box">
+          <span>Очков за раунд:</span>
+          <strong id="alias-review-round-score">+0</strong>
+        </div>
+      </header>
+
+      <div class="scroll-area">
+        <div class="card">
+          <div class="card-header-flex">
+            <label class="card-label">Слова раунда</label>
+            <span class="hint-small">Нажмите, чтобы исправить ошибку</span>
+          </div>
+          <div id="alias-review-words-list" class="alias-review-list"></div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <button type="button" id="alias-review-confirm-btn" class="btn btn-primary btn-large">Применить и передать ход →</button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 13: ПОБЕДА (ЭЛИАС) ===== -->
+    <section id="screen-alias-winner" class="screen">
+      <div class="center-content">
+        <div class="winner-trophy pulse-anim">🏆</div>
+        <h1 class="screen-title">Победа!</h1>
+        <p class="pass-name" id="alias-winner-team-name">Команда 1</p>
+        <p class="rules-text">Команда достигла победного счёта и выигрывает эту битву слов!</p>
+
+        <div class="card" style="width: 100%; margin-top: 10px;">
+          <label class="card-label">Итоговый счёт</label>
+          <div id="alias-winner-scoreboard" class="alias-scoreboard-list"></div>
+        </div>
+
+        <button type="button" id="alias-winner-replay-btn" class="btn btn-primary btn-large">Сыграть ещё раз</button>
+        <button type="button" id="alias-winner-to-menu-btn" class="btn btn-ghost">← В главное меню</button>
+      </div>
+    </section>
+
+    <!-- Всплывающее уведомление (Toast) -->
+    <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
   </div>
 
   <script src="script.js"></script>
-
   <script>
-    // Регистрация Service Worker для офлайн-режима (PWA)
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("sw.js")
-          .catch((err) => console.warn("Service Worker не зарегистрирован:", err));
+        navigator.serviceWorker.register("sw.js").catch((err) => console.warn("SW не зарегистрирован:", err));
       });
     }
   </script>
