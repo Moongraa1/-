@@ -7,7 +7,7 @@
 
 /* Версия кэша. При изменении содержимого файлов увеличивайте номер,
    чтобы старый кэш автоматически очистился при обновлении. */
-const CACHE_NAME = "party-games-v4";
+const CACHE_NAME = "party-games-v5";
 
 /* Файлы, которые сохраняем для офлайн-работы */
 const ASSETS = [
@@ -15,6 +15,7 @@ const ASSETS = [
   "./index.html",
   "./style.css",
   "./script.js",
+  "./pool.js",
   "./manifest.json"
 ];
 

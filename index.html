@@ -57,6 +57,17 @@
             </div>
             <div class="game-card__action">Играть →</div>
           </div>
+
+          <!-- Карточка Бильярд 8-Ball -->
+          <div class="game-card game-card--pool" id="card-pool" role="button" tabindex="0">
+            <div class="game-card__badge game-card__badge--pool">2 игрока</div>
+            <div class="game-card__icon game-card__icon--pool">🎱</div>
+            <div class="game-card__info">
+              <h2 class="game-card__title">Бильярд 8-Ball</h2>
+              <p class="game-card__desc">Классический пул-восьмерка на одном экране! Забей свои шары и черную восьмерку.</p>
+            </div>
+            <div class="game-card__action">Играть →</div>
+          </div>
         </div>
       </div>
     </section>
@@ -505,11 +516,178 @@
       </div>
     </section>
 
+    <!-- ===== ЭКРАН 14: НАСТРОЙКИ БИЛЬЯРДА (8-BALL) ===== -->
+    <section id="screen-pool-setup" class="screen">
+      <header class="app-header with-back">
+        <button type="button" class="back-btn" id="pool-setup-back-btn" aria-label="Назад в меню">← В меню</button>
+        <div class="header-center">
+          <h1 class="app-title">🎱 Бильярд 8-Ball</h1>
+          <p class="app-subtitle">Классический пул для двоих на одном экране</p>
+        </div>
+      </header>
+
+      <div class="scroll-area">
+        <div class="card">
+          <label class="card-label">Имена игроков</label>
+          <div class="players-names">
+            <div class="player-row">
+              <span class="player-index">1</span>
+              <input type="text" id="pool-player1-input" class="input" placeholder="Игрок 1" value="Игрок 1" maxlength="20" autocomplete="off">
+            </div>
+            <div class="player-row">
+              <span class="player-index">2</span>
+              <input type="text" id="pool-player2-input" class="input" placeholder="Игрок 2" value="Игрок 2" maxlength="20" autocomplete="off">
+            </div>
+          </div>
+          <p class="hint">Оставьте пустыми для стандартных названий «Игрок 1» и «Игрок 2»</p>
+        </div>
+
+        <div class="card pool-rules-brief">
+          <label class="card-label">Краткие правила 8-Ball</label>
+          <div class="pool-rules-list">
+            <div class="pool-rule-item">
+              <span class="pool-rule-icon">🎲</span>
+              <div class="pool-rule-info">
+                <strong>Первый ход (разбой):</strong>
+                <span>Определяется случайно 50/50 перед началом партии.</span>
+              </div>
+            </div>
+            <div class="pool-rule-item">
+              <span class="pool-rule-icon">⚪</span>
+              <div class="pool-rule-info">
+                <strong>Открытый стол:</strong>
+                <span>После разбоя стол открыт. Группы шаров (сплошные 1–7 или полосатые 9–15) определяются первым легальным забитым шаром после разбоя.</span>
+              </div>
+            </div>
+            <div class="pool-rule-item">
+              <span class="pool-rule-icon">🎯</span>
+              <div class="pool-rule-info">
+                <strong>Шар №8 (Черный):</strong>
+                <span>Заказ лузы обязателен! Забивается только после того, как игрок забил все 7 шаров своей группы.</span>
+              </div>
+            </div>
+            <div class="pool-rule-item">
+              <span class="pool-rule-icon">⚠️</span>
+              <div class="pool-rule-info">
+                <strong>Фолы и поражение:</strong>
+                <span>При фоле соперник получает «Биток в руке». Забитие 8-ки раньше времени или падение битка вместе с 8-кой — мгновенное поражение!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bar">
+        <button type="button" id="pool-start-btn" class="btn btn-primary btn-large">Играть 🎱</button>
+      </div>
+    </section>
+
+    <!-- ===== ЭКРАН 15: ИГРА БИЛЬЯРД (8-BALL) ===== -->
+    <section id="screen-pool-game" class="screen screen-pool-active-game">
+      <!-- Верхняя панель управления и навигации -->
+      <div class="pool-top-nav">
+        <button type="button" class="back-btn pool-nav-btn" id="pool-game-back-btn" title="Выход в меню">← В меню</button>
+        <div class="pool-nav-title">🎱 8-Ball Pool</div>
+        <div class="pool-nav-actions">
+          <button type="button" class="pool-icon-btn" id="pool-sound-btn" title="Звук: Вкл/Выкл">🔊</button>
+          <button type="button" class="pool-icon-btn" id="pool-reset-btn" title="Перезапустить партию">🔄</button>
+        </div>
+      </div>
+
+      <!-- Информационная панель (HUD) игроков -->
+      <div class="pool-hud">
+        <div class="pool-player-card" id="pool-p1-card">
+          <div class="pool-player-top">
+            <span class="pool-player-badge" id="pool-p1-badge">ХОДИТ</span>
+            <span class="pool-player-name" id="pool-p1-name">Игрок 1</span>
+          </div>
+          <div class="pool-player-group" id="pool-p1-group">Открытый стол</div>
+          <div class="pool-player-balls" id="pool-p1-balls"></div>
+        </div>
+
+        <div class="pool-hud-center">
+          <div class="pool-vs-text">VS</div>
+          <div class="pool-table-status-pill" id="pool-table-status-pill">Открытый стол</div>
+        </div>
+
+        <div class="pool-player-card" id="pool-p2-card">
+          <div class="pool-player-top">
+            <span class="pool-player-badge" id="pool-p2-badge">ХОДИТ</span>
+            <span class="pool-player-name" id="pool-p2-name">Игрок 2</span>
+          </div>
+          <div class="pool-player-group" id="pool-p2-group">Открытый стол</div>
+          <div class="pool-player-balls" id="pool-p2-balls"></div>
+        </div>
+      </div>
+
+      <!-- Строка состояния / подсказки игры -->
+      <div class="pool-status-bar" id="pool-status-bar">
+        <span class="pool-status-icon" id="pool-status-icon">🎱</span>
+        <span class="pool-status-text" id="pool-status-text">Подготовка к партии...</span>
+      </div>
+
+      <!-- Область бильярдного стола -->
+      <div class="pool-table-wrapper" id="pool-table-wrapper">
+        <div class="pool-canvas-container" id="pool-canvas-container">
+          <canvas id="pool-canvas" width="840" height="420"></canvas>
+          <div class="pool-nominate-overlay hidden" id="pool-nominate-overlay"></div>
+          <div class="pool-in-hand-banner hidden" id="pool-in-hand-banner">
+            <span>✋ Перетащите белый шар в свободное место на столе</span>
+            <button type="button" class="btn btn-secondary pool-btn-place" id="pool-place-ball-btn">Поставить здесь</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Нижняя панель управления ударом и прицелом -->
+      <div class="pool-controls-bar">
+        <!-- Тонкая доводка угла прицела -->
+        <div class="pool-fine-tune-group">
+          <button type="button" class="pool-tune-btn" id="pool-aim-left" title="Повернуть влево" aria-label="Повернуть влево">◀</button>
+          <span class="pool-tune-label">Прицел</span>
+          <button type="button" class="pool-tune-btn" id="pool-aim-right" title="Повернуть вправо" aria-label="Повернуть вправо">▶</button>
+        </div>
+
+        <!-- Слайдер силы удара -->
+        <div class="pool-power-group">
+          <div class="pool-power-header">
+            <span class="pool-power-label">Сила удара</span>
+            <span class="pool-power-value" id="pool-power-value">50%</span>
+          </div>
+          <div class="pool-power-track-wrap">
+            <input type="range" id="pool-power-slider" class="pool-power-range" min="5" max="100" value="50">
+          </div>
+        </div>
+
+        <!-- Кнопка удара -->
+        <button type="button" class="pool-strike-btn" id="pool-strike-btn">
+          <span class="pool-strike-icon">💥</span>
+          <span class="pool-strike-text">УДАР</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ПОБЕДЫ (БИЛЬЯРД) ===== -->
+    <div id="pool-winner-modal" class="pool-modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="pool-modal-card">
+        <div class="winner-trophy pulse-anim">🏆</div>
+        <h2 class="screen-title" id="pool-winner-title">Победа!</h2>
+        <p class="pool-winner-player" id="pool-winner-player-name">Игрок 1</p>
+        <div class="pool-winner-reason-box">
+          <p id="pool-winner-reason-text">Забил шар №8 в заказанную лузу!</p>
+        </div>
+        <div class="pool-modal-actions">
+          <button type="button" id="pool-modal-replay-btn" class="btn btn-primary btn-large">Сыграть ещё раз 🎱</button>
+          <button type="button" id="pool-modal-menu-btn" class="btn btn-ghost">← В главное меню</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Всплывающее уведомление (Toast) -->
     <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
   </div>
 
   <script src="script.js"></script>
+  <script src="pool.js"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {

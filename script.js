@@ -315,7 +315,9 @@ function cacheElements() {
     aliasReady: document.getElementById("screen-alias-ready"),
     aliasGame: document.getElementById("screen-alias-game"),
     aliasReview: document.getElementById("screen-alias-round-review"),
-    aliasWinner: document.getElementById("screen-alias-winner")
+    aliasWinner: document.getElementById("screen-alias-winner"),
+    poolSetup: document.getElementById("screen-pool-setup"),
+    poolGame: document.getElementById("screen-pool-game")
   };
 
   dom.toast = document.getElementById("toast");
@@ -324,6 +326,7 @@ function cacheElements() {
   dom.cardSpy = document.getElementById("card-spy");
   dom.cardMafia = document.getElementById("card-mafia");
   dom.cardElias = document.getElementById("card-elias");
+  dom.cardPool = document.getElementById("card-pool");
 
   // Кнопки возврата в меню
   dom.spyBackBtn = document.getElementById("spy-back-to-menu-btn");
@@ -333,6 +336,7 @@ function cacheElements() {
   dom.aliasBackBtn = document.getElementById("alias-back-to-menu-btn");
   dom.aliasReadyBackBtn = document.getElementById("alias-ready-to-menu-btn");
   dom.aliasWinnerToMenuBtn = document.getElementById("alias-winner-to-menu-btn");
+  dom.poolSetupBackBtn = document.getElementById("pool-setup-back-btn");
 
   // Шпион
   dom.spyPlayersCount = document.getElementById("players-count");
@@ -452,6 +456,7 @@ function bindEvents() {
   dom.cardSpy.addEventListener("click", () => showScreen("spySetup"));
   dom.cardMafia.addEventListener("click", () => showScreen("mafiaSetup"));
   dom.cardElias.addEventListener("click", () => showScreen("aliasSetup"));
+  if (dom.cardPool) dom.cardPool.addEventListener("click", () => showScreen("poolSetup"));
 
   // Возврат в меню
   dom.spyBackBtn.addEventListener("click", () => showScreen("menu"));
@@ -459,6 +464,7 @@ function bindEvents() {
   dom.mafiaBackBtn.addEventListener("click", () => showScreen("menu"));
   dom.mafiaEndGameBtn.addEventListener("click", confirmEndMafiaGame);
   dom.aliasBackBtn.addEventListener("click", () => showScreen("menu"));
+  if (dom.poolSetupBackBtn) dom.poolSetupBackBtn.addEventListener("click", () => showScreen("menu"));
   dom.aliasReadyBackBtn.addEventListener("click", () => {
     if (confirm("Выйти в главное меню? Текущий прогресс партии Элиас будет сброшен.")) {
       showScreen("menu");
@@ -559,6 +565,7 @@ function showScreen(screenKey) {
     if (scrollArea) scrollArea.scrollTop = 0;
   }
 }
+window.showScreen = showScreen;
 
 function showToast(message, duration = 3000) {
   if (!dom.toast) return;
@@ -569,6 +576,7 @@ function showToast(message, duration = 3000) {
     dom.toast.classList.remove("show");
   }, duration);
 }
+window.showToast = showToast;
 
 function shuffleArray(array) {
   const arr = array.slice();
