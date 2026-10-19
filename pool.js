@@ -8,9 +8,9 @@
 "use strict";
 
 (function () {
-  /* ===== 1. КОНСТАНТЫ СТОЛА И ГЕОМЕТРИИ ===== */
-  const TABLE_WIDTH = 840;
-  const TABLE_HEIGHT = 420;
+  /* ===== 1. КОНСТАНТЫ СТОЛА И ГЕОМЕТРИИ (ВЕРТИКАЛЬНЫЙ СТОЛ) ===== */
+  const TABLE_WIDTH = 420;
+  const TABLE_HEIGHT = 840;
   const CUSHION_WIDTH = 32;
   const BALL_RADIUS = 11.5;
   const BALL_DIAMETER = BALL_RADIUS * 2;
@@ -42,31 +42,34 @@
     15: "#831843"  // 15 Полосатый бордовый
   };
 
-  // 6 луз стола: координаты центров и радиусы захвата
+  // 6 луз вертикального стола (4 угловые + 2 центральные на длинных боковых сторонах)
   const POCKETS = [
     { x: 34, y: 34, r: 26, name: "Левая верхняя луза" },
-    { x: 420, y: 22, r: 23, name: "Центральная верхняя луза" },
-    { x: 806, y: 34, r: 26, name: "Правая верхняя луза" },
-    { x: 34, y: 386, r: 26, name: "Левая нижняя луза" },
-    { x: 420, y: 398, r: 23, name: "Центральная нижняя луза" },
-    { x: 806, y: 386, r: 26, name: "Правая нижняя луза" }
+    { x: 386, y: 34, r: 26, name: "Правая верхняя луза" },
+    { x: 22, y: 420, r: 23, name: "Левая центральная луза" },
+    { x: 398, y: 420, r: 23, name: "Правая центральная луза" },
+    { x: 34, y: 806, r: 26, name: "Левая нижняя луза" },
+    { x: 386, y: 806, r: 26, name: "Правая нижняя луза" }
   ];
 
-  // 6 прямых сегментов бортов стола
+  // 6 прямых сегментов бортов вертикального стола
   const CUSHIONS = [
-    { type: "horizontal", x1: 58, x2: 398, y: 32, normalY: 1 },    // Верхний левый
-    { type: "horizontal", x1: 442, x2: 782, y: 32, normalY: 1 },   // Верхний правый
-    { type: "horizontal", x1: 58, x2: 398, y: 388, normalY: -1 },  // Нижний левый
-    { type: "horizontal", x1: 442, x2: 782, y: 388, normalY: -1 }, // Нижний правый
-    { type: "vertical", y1: 58, y2: 362, x: 32, normalX: 1 },      // Левый борт
-    { type: "vertical", y1: 58, y2: 362, x: 808, normalX: -1 }     // Правый борт
+    { type: "horizontal", x1: 58, x2: 362, y: 32, normalY: 1 },    // Верхний короткий борт
+    { type: "horizontal", x1: 58, x2: 362, y: 808, normalY: -1 },  // Нижний короткий борт
+    { type: "vertical", y1: 58, y2: 398, x: 32, normalX: 1 },      // Левый верхний борт
+    { type: "vertical", y1: 442, y2: 782, x: 32, normalX: 1 },     // Левый нижний борт
+    { type: "vertical", y1: 58, y2: 398, x: 388, normalX: -1 },    // Правый верхний борт
+    { type: "vertical", y1: 442, y2: 782, x: 388, normalX: -1 }    // Правый нижний борт
   ];
 
   // Угловые вершины губок луз для скругленного отскока
   const CUSHION_VERTICES = [
-    { x: 58, y: 32 }, { x: 398, y: 32 }, { x: 442, y: 32 }, { x: 782, y: 32 },
-    { x: 58, y: 388 }, { x: 398, y: 388 }, { x: 442, y: 388 }, { x: 782, y: 388 },
-    { x: 32, y: 58 }, { x: 32, y: 362 }, { x: 808, y: 58 }, { x: 808, y: 362 }
+    { x: 58, y: 32 }, { x: 362, y: 32 },
+    { x: 58, y: 808 }, { x: 362, y: 808 },
+    { x: 32, y: 58 }, { x: 32, y: 398 },
+    { x: 32, y: 442 }, { x: 32, y: 782 },
+    { x: 388, y: 58 }, { x: 388, y: 398 },
+    { x: 388, y: 442 }, { x: 388, y: 782 }
   ];
 
   /* ===== 2. ЗВУКОВОЙ СИНТЕЗАТОР (WEB AUDIO API) ===== */
@@ -343,11 +346,11 @@
     nominatedPocket: null, // 0..5 (обязателен только для шара №8)
 
     ballInHand: false,
-    handBallPos: { x: 226, y: 210 },
+    handBallPos: { x: 210, y: 614 },
     handBallValid: true,
     isDraggingHandBall: false,
 
-    aimAngle: 0, // Направление удара (радианы)
+    aimAngle: -Math.PI / 2, // Направление удара (по умолчанию строго вверх на пирамиду)
     aimPower: 0.5, // 0.05..1.0
     isAiming: false,
     isDraggingCue: false,
@@ -449,9 +452,9 @@
     // Создание шаров
     createRackBalls();
 
-    // Направление прицеливания битка в сторону пирамиды
+    // Направление прицеливания битка в сторону пирамиды (вверх)
     const cueBall = getCueBall();
-    poolState.aimAngle = 0; // Строго вправо в сторону вершины пирамиды
+    poolState.aimAngle = -Math.PI / 2; // Строго вверх в сторону вершины пирамиды
 
     // Скрытие модальных окон
     if (poolDom.winnerModal) poolDom.winnerModal.classList.add("hidden");
@@ -472,31 +475,31 @@
   function createRackBalls() {
     poolState.balls = [];
 
-    // Биток в «доме» (x = 226, y = 210)
-    const cueBall = new Ball(0, 226, 210);
+    // Биток в «доме» снизу стола (x = 210, y = 614)
+    const cueBall = new Ball(0, 210, 614);
     poolState.balls.push(cueBall);
 
-    // Точка пирамиды (foot spot)
-    const apexX = 590;
-    const apexY = 210;
+    // Точка пирамиды (foot spot) сверху стола (x = 210, y = 250)
+    const apexX = 210;
+    const apexY = 250;
     const rowSpacing = BALL_RADIUS * Math.sqrt(3); // ~19.92 px
     const ballSpacing = BALL_DIAMETER; // 23 px
 
     // Позиции для 15 шаров пирамиды:
-    // Ряд 1: 1 шар (apex)
-    // Ряд 2: 2 шара
-    // Ряд 3: 3 шара (центр — шар №8)
-    // Ряд 4: 4 шара
-    // Ряд 5: 5 шаров (нижние углы: один сплошной, один полосатый)
+    // Ряд 0: 1 шар (apex, обращен вниз к битку)
+    // Ряд 1: 2 шара
+    // Ряд 2: 3 шара (центр — шар №8)
+    // Ряд 3: 4 шара
+    // Ряд 4: 5 шаров (базовые углы: один сплошной, один полосатый)
     const positions = [];
 
     for (let row = 0; row < 5; row++) {
-      const rx = apexX + row * rowSpacing;
-      const startY = apexY - (row * ballSpacing) / 2;
+      const ry = apexY - row * rowSpacing; // пирамида расширяется вверх к верхнему борту
+      const startX = apexX - (row * ballSpacing) / 2;
       for (let col = 0; col <= row; col++) {
         positions.push({
-          x: rx,
-          y: startY + col * ballSpacing,
+          x: startX + col * ballSpacing,
+          y: ry,
           row: row,
           col: col
         });
@@ -969,13 +972,13 @@
     if (eightPotted) {
       // Исключение: Разбой пирамиды
       if (poolState.isFirstShot) {
-        // Выставляем шар №8 обратно на точку пирамиды
+        // Выставляем шар №8 обратно на точку пирамиды (x=210, y=250)
         const eightBall = poolState.balls.find((b) => b.id === 8);
         if (eightBall) {
           eightBall.isPotted = false;
           eightBall.pottedAnim = 0;
-          eightBall.x = 590;
-          eightBall.y = 210;
+          eightBall.x = 210;
+          eightBall.y = 250;
           eightBall.resetVelocity();
         }
         setGameStatus("Шар №8 выставлен обратно на стол (разбой)!", "normal");
@@ -1167,7 +1170,7 @@
       cueBall.resetVelocity();
 
       // Ищем свободное место на столе
-      const freePos = findFreeBallPosition(226, 210);
+      const freePos = findFreeBallPosition(210, 614);
       cueBall.x = freePos.x;
       cueBall.y = freePos.y;
       poolState.handBallPos = { x: freePos.x, y: freePos.y };
@@ -1178,11 +1181,11 @@
   }
 
   function validateCueBallPosition(x, y) {
-    // В пределах игрового сукна
+    // В пределах игрового сукна вертикального стола (32..388 по X, 32..808 по Y)
     const minX = 32 + BALL_RADIUS + 3;
-    const maxX = 808 - BALL_RADIUS - 3;
+    const maxX = 388 - BALL_RADIUS - 3;
     const minY = 32 + BALL_RADIUS + 3;
-    const maxY = 388 - BALL_RADIUS - 3;
+    const maxY = 808 - BALL_RADIUS - 3;
 
     if (x < minX || x > maxX || y < minY || y > maxY) return false;
 
@@ -1216,7 +1219,7 @@
         }
       }
     }
-    return { x: 226, y: 210 };
+    return { x: 210, y: 614 };
   }
 
   function confirmBallInHandPlacement() {
@@ -1335,10 +1338,10 @@
     let wallBounceDir = { x: dirX, y: dirY };
 
     if (dirX > 0) {
-      const d = (808 - BALL_RADIUS - cx) / dirX;
+      const d = (388 - BALL_RADIUS - cx) / dirX;
       if (d > 0 && d < wallDist) {
         wallDist = d;
-        wallHitX = 808 - BALL_RADIUS;
+        wallHitX = 388 - BALL_RADIUS;
         wallHitY = cy + dirY * d;
         wallBounceDir = { x: -dirX, y: dirY };
       }
@@ -1353,11 +1356,11 @@
     }
 
     if (dirY > 0) {
-      const d = (388 - BALL_RADIUS - cy) / dirY;
+      const d = (808 - BALL_RADIUS - cy) / dirY;
       if (d > 0 && d < wallDist) {
         wallDist = d;
         wallHitX = cx + dirX * d;
-        wallHitY = 388 - BALL_RADIUS;
+        wallHitY = 808 - BALL_RADIUS;
         wallBounceDir = { x: dirX, y: -dirY };
       }
     } else if (dirY < 0) {
@@ -1444,7 +1447,7 @@
     // Металлические угловые накладки стола (латунь)
     drawCornerBrackets(ctx);
 
-    // 2. Игровое зеленое сукно (Felt)
+    // 2. Игровое зеленое сукно (Felt) вертикального стола (356 x 776)
     const feltGrad = ctx.createRadialGradient(
       TABLE_WIDTH / 2, TABLE_HEIGHT / 2, 40,
       TABLE_WIDTH / 2, TABLE_HEIGHT / 2, 450
@@ -1454,29 +1457,29 @@
     feltGrad.addColorStop(1, "#074a26"); // Глубокая тень у бортов
 
     ctx.fillStyle = feltGrad;
-    ctx.fillRect(32, 32, 776, 356);
+    ctx.fillRect(32, 32, 356, 776);
 
     // Внутренняя тень от бортов на сукно
     ctx.fillStyle = "rgba(0, 0, 0, 0.28)";
-    ctx.fillRect(32, 32, 776, 6); // Верхняя тень
-    ctx.fillRect(32, 382, 776, 6); // Нижняя тень
-    ctx.fillRect(32, 32, 6, 356); // Левая тень
-    ctx.fillRect(802, 32, 6, 356); // Правая тень
+    ctx.fillRect(32, 32, 356, 6); // Верхняя тень
+    ctx.fillRect(32, 802, 356, 6); // Нижняя тень
+    ctx.fillRect(32, 32, 6, 776); // Левая тень
+    ctx.fillRect(382, 32, 6, 776); // Правая тень
 
-    // 3. Разметка стола: Линия «дома» (Head String) и Точка пирамиды (Foot Spot)
+    // 3. Разметка стола: Линия «дома» (Head String) снизу и Точка пирамиды (Foot Spot) сверху
     ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
     ctx.lineWidth = 1.5;
     ctx.setLineDash([4, 4]);
     ctx.beginPath();
-    ctx.moveTo(226, 32);
-    ctx.lineTo(226, 388);
+    ctx.moveTo(32, 614);
+    ctx.lineTo(388, 614);
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Точка пирамиды
+    // Точка пирамиды (Foot Spot)
     ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
     ctx.beginPath();
-    ctx.arc(590, 210, 3, 0, Math.PI * 2);
+    ctx.arc(210, 250, 3, 0, Math.PI * 2);
     ctx.fill();
 
     // 4. Метки бортов (бриллианты / ромбики)
@@ -1517,7 +1520,7 @@
     const corners = [
       { x: 0, y: 0 },
       { x: TABLE_WIDTH, y: 0 },
-      { x: 0, TABLE_HEIGHT },
+      { x: 0, y: TABLE_HEIGHT },
       { x: TABLE_WIDTH, y: TABLE_HEIGHT }
     ];
     ctx.fillStyle = "rgba(245, 158, 11, 0.25)";
@@ -1530,19 +1533,19 @@
 
   function drawDiamondSights(ctx) {
     ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
-    const xSegments = [129, 226, 323, 517, 614, 711];
-    const ySegments = [121, 210, 299];
+    const xSegments = [121, 210, 299]; // 3 точки на коротких сторонах (Top и Bottom)
+    const ySegments = [129, 226, 323, 517, 614, 711]; // 6 точек на длинных сторонах (Left и Right)
 
-    // Верхние и нижние метки
+    // Верхние и нижние метки (на коротких сторонах)
     for (const x of xSegments) {
       drawDiamond(ctx, x, 16);
-      drawDiamond(ctx, x, 404);
+      drawDiamond(ctx, x, 824);
     }
 
-    // Левые и правые метки
+    // Левые и правые метки (на длинных сторонах)
     for (const y of ySegments) {
       drawDiamond(ctx, 16, y);
-      drawDiamond(ctx, 824, y);
+      drawDiamond(ctx, 404, y);
     }
   }
 
@@ -1957,6 +1960,29 @@
     };
   }
 
+  /* ===== 14. ОБРАБОТЧИКИ ВВОДА (УПРАВЛЕНИЕ МЫШЬЮ И ТАЧЕМ) ===== */
+  let isPointerTrackingActive = false;
+
+  function startTrackingPointer() {
+    if (isPointerTrackingActive) return;
+    isPointerTrackingActive = true;
+    window.addEventListener("mousemove", onPointerMove);
+    window.addEventListener("mouseup", onPointerUp);
+    window.addEventListener("touchmove", onPointerMove, { passive: false });
+    window.addEventListener("touchend", onPointerUp);
+    window.addEventListener("touchcancel", onPointerUp);
+  }
+
+  function stopTrackingPointer() {
+    if (!isPointerTrackingActive) return;
+    isPointerTrackingActive = false;
+    window.removeEventListener("mousemove", onPointerMove);
+    window.removeEventListener("mouseup", onPointerUp);
+    window.removeEventListener("touchmove", onPointerMove);
+    window.removeEventListener("touchend", onPointerUp);
+    window.removeEventListener("touchcancel", onPointerUp);
+  }
+
   function onPointerDown(e) {
     if (poolState.shotInProgress || poolState.gameOver) return;
     if (e.cancelable && e.type.startsWith("touch")) {
@@ -1971,6 +1997,7 @@
     if (poolState.ballInHand && cueBall) {
       poolState.isDraggingHandBall = true;
       updateHandBallTarget(pt.x, pt.y);
+      startTrackingPointer();
       return;
     }
 
@@ -1993,11 +2020,16 @@
     if (cueBall && !cueBall.isPotted) {
       poolState.isAiming = true;
       updateAimAngleFromPoint(pt.x, pt.y);
+      startTrackingPointer();
     }
   }
 
   function onPointerMove(e) {
-    if (poolState.shotInProgress || poolState.gameOver) return;
+    if (!poolState.isAiming && !poolState.isDraggingHandBall) return;
+    if (poolState.shotInProgress || poolState.gameOver) {
+      onPointerUp();
+      return;
+    }
     if (e.cancelable && e.type.startsWith("touch")) {
       e.preventDefault();
     }
@@ -2017,6 +2049,7 @@
   function onPointerUp() {
     poolState.isAiming = false;
     poolState.isDraggingHandBall = false;
+    stopTrackingPointer();
   }
 
   function updateHandBallTarget(x, y) {
@@ -2040,6 +2073,7 @@
 
   /* ===== 15. ЗАВЕРШЕНИЕ ИГРЫ И МОДАЛЬНЫЕ ОКНА ===== */
   function endGameWithWinner(winner, reason) {
+    onPointerUp();
     poolState.gameOver = true;
     poolState.shotInProgress = false;
 
@@ -2075,6 +2109,7 @@
     // Возврат в меню из игры
     if (poolDom.gameBackBtn) {
       poolDom.gameBackBtn.addEventListener("click", () => {
+        onPointerUp();
         if (poolState.gameOver || confirm("Выйти в главное меню? Текущая партия в бильярд будет завершена.")) {
           if (window.showScreen) window.showScreen("menu");
         }
@@ -2142,6 +2177,7 @@
     // Модальное окно победы: В главное меню
     if (poolDom.winnerMenuBtn) {
       poolDom.winnerMenuBtn.addEventListener("click", () => {
+        onPointerUp();
         if (poolDom.winnerModal) poolDom.winnerModal.classList.add("hidden");
         if (window.showScreen) window.showScreen("menu");
       });
@@ -2151,12 +2187,7 @@
     const canvas = poolDom.canvas;
     if (canvas) {
       canvas.addEventListener("mousedown", onPointerDown);
-      window.addEventListener("mousemove", onPointerMove);
-      window.addEventListener("mouseup", onPointerUp);
-
       canvas.addEventListener("touchstart", onPointerDown, { passive: false });
-      window.addEventListener("touchmove", onPointerMove, { passive: false });
-      window.addEventListener("touchend", onPointerUp, { passive: false });
     }
   }
 

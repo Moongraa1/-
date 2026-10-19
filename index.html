@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-title" content="Вечеринка Игр">
   <title>Игры для компании: Шпион, Мафия и Элиас</title>
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <div class="app" id="app-root">
@@ -629,7 +629,7 @@
       <!-- Область бильярдного стола -->
       <div class="pool-table-wrapper" id="pool-table-wrapper">
         <div class="pool-canvas-container" id="pool-canvas-container">
-          <canvas id="pool-canvas" width="840" height="420"></canvas>
+          <canvas id="pool-canvas" width="420" height="840"></canvas>
           <div class="pool-nominate-overlay hidden" id="pool-nominate-overlay"></div>
           <div class="pool-in-hand-banner hidden" id="pool-in-hand-banner">
             <span>✋ Перетащите белый шар в свободное место на столе</span>
@@ -687,7 +687,7 @@
   </div>
 
   <script src="script.js"></script>
-  <script src="pool.js"></script>
+  <script src="pool.js?v=7"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
