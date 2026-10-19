@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -12,6 +13,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css?v=7">
 </head>
+
 <body>
   <div class="app" id="app-root">
 
@@ -64,7 +66,20 @@
             <div class="game-card__icon game-card__icon--pool">🎱</div>
             <div class="game-card__info">
               <h2 class="game-card__title">Бильярд 8-Ball</h2>
-              <p class="game-card__desc">Классический пул-восьмерка на одном экране! Забей свои шары и черную восьмерку.</p>
+              <p class="game-card__desc">Классический пул-восьмерка на одном экране! Забей свои шары и черную восьмерку.
+              </p>
+            </div>
+            <div class="game-card__action">Играть →</div>
+          </div>
+
+          <!-- Карточка Аэрохоккей -->
+          <div class="game-card game-card--airhockey" id="card-airhockey" role="button" tabindex="0">
+            <div class="game-card__badge game-card__badge--airhockey">2 игрока</div>
+            <div class="game-card__icon game-card__icon--airhockey">🏒</div>
+            <div class="game-card__info">
+              <h2 class="game-card__title">Аэрохоккей</h2>
+              <p class="game-card__desc">Динамичная битва на реакцию! Забивай шайбу в ворота соперника на одном экране.
+              </p>
             </div>
             <div class="game-card__action">Играть →</div>
           </div>
@@ -106,7 +121,8 @@
 
         <div class="card">
           <label class="card-label">Добавить свою локацию</label>
-          <input type="text" id="custom-location-input" class="input" placeholder="Название места (напр. Аквапарк)" autocomplete="off">
+          <input type="text" id="custom-location-input" class="input" placeholder="Название места (напр. Аквапарк)"
+            autocomplete="off">
           <select id="custom-category" class="input select"></select>
           <button type="button" id="add-custom-btn" class="btn btn-secondary">Добавить локацию</button>
           <div id="custom-list" class="custom-list"></div>
@@ -145,7 +161,8 @@
         <div class="role-card role-card--spy hidden" id="role-spy-card">
           <span class="role-label">Ваша роль</span>
           <span class="role-location">🕵️ Ты — ШПИОН!</span>
-          <p class="role-subhint">Вы не знаете локацию. Слушайте вопросы других игроков, блефуйте и попытайтесь угадать место!</p>
+          <p class="role-subhint">Вы не знаете локацию. Слушайте вопросы других игроков, блефуйте и попытайтесь угадать
+            место!</p>
         </div>
 
         <p class="hint">Запомните информацию и передайте телефон дальше</p>
@@ -159,7 +176,8 @@
         <div class="game-icon">🎮</div>
         <h2 class="screen-title">Игра началась!</h2>
         <div class="card rules-card">
-          <p class="rules-text">Задавайте друг другу наводящие вопросы о локации по кругу. Шпион не знает локацию и должен не выдать себя либо назвать место!</p>
+          <p class="rules-text">Задавайте друг другу наводящие вопросы о локации по кругу. Шпион не знает локацию и
+            должен не выдать себя либо назвать место!</p>
         </div>
         <p class="first-player">Первым задаёт вопрос:<br><strong id="first-player-name">Игрок 1</strong></p>
         <button type="button" id="next-round-btn" class="btn btn-primary btn-large">Следующий раунд</button>
@@ -252,7 +270,8 @@
 
       <div class="footer-bar">
         <button type="button" id="mafia-toggle-role-btn" class="btn btn-primary btn-large">Посмотреть роль</button>
-        <button type="button" id="mafia-pass-next-btn" class="btn btn-accent btn-large hidden">Скрыть и передать →</button>
+        <button type="button" id="mafia-pass-next-btn" class="btn btn-accent btn-large hidden">Скрыть и передать
+          →</button>
       </div>
     </section>
 
@@ -265,7 +284,8 @@
           <p class="rules-text">Все игроки узнали свои роли и получили инструкции. На экране ничего не раскрыто.</p>
         </div>
         <p class="warning">Город засыпает... Ведущий берет управление игрой в свои руки!</p>
-        <button type="button" id="mafia-host-enter-btn" class="btn btn-primary btn-large">Я ведущий — открыть панель</button>
+        <button type="button" id="mafia-host-enter-btn" class="btn btn-primary btn-large">Я ведущий — открыть
+          панель</button>
       </div>
     </section>
 
@@ -315,7 +335,8 @@
             <label class="card-label" for="mafia-host-notes">Заметки ведущего</label>
             <button type="button" class="btn-clear-notes" id="mafia-clear-notes-btn">Очистить</button>
           </div>
-          <textarea id="mafia-host-notes" class="input host-notes-textarea" placeholder="Записывайте ночные убийства, проверки шерифа, алиби и результаты дневного голосования..."></textarea>
+          <textarea id="mafia-host-notes" class="input host-notes-textarea"
+            placeholder="Записывайте ночные убийства, проверки шерифа, алиби и результаты дневного голосования..."></textarea>
         </div>
       </div>
 
@@ -494,7 +515,8 @@
       </div>
 
       <div class="footer-bar">
-        <button type="button" id="alias-review-confirm-btn" class="btn btn-primary btn-large">Применить и передать ход →</button>
+        <button type="button" id="alias-review-confirm-btn" class="btn btn-primary btn-large">Применить и передать ход
+          →</button>
       </div>
     </section>
 
@@ -532,11 +554,13 @@
           <div class="players-names">
             <div class="player-row">
               <span class="player-index">1</span>
-              <input type="text" id="pool-player1-input" class="input" placeholder="Игрок 1" value="Игрок 1" maxlength="20" autocomplete="off">
+              <input type="text" id="pool-player1-input" class="input" placeholder="Игрок 1" value="Игрок 1"
+                maxlength="20" autocomplete="off">
             </div>
             <div class="player-row">
               <span class="player-index">2</span>
-              <input type="text" id="pool-player2-input" class="input" placeholder="Игрок 2" value="Игрок 2" maxlength="20" autocomplete="off">
+              <input type="text" id="pool-player2-input" class="input" placeholder="Игрок 2" value="Игрок 2"
+                maxlength="20" autocomplete="off">
             </div>
           </div>
           <p class="hint">Оставьте пустыми для стандартных названий «Игрок 1» и «Игрок 2»</p>
@@ -556,21 +580,24 @@
               <span class="pool-rule-icon">⚪</span>
               <div class="pool-rule-info">
                 <strong>Открытый стол:</strong>
-                <span>После разбоя стол открыт. Группы шаров (сплошные 1–7 или полосатые 9–15) определяются первым легальным забитым шаром после разбоя.</span>
+                <span>После разбоя стол открыт. Группы шаров (сплошные 1–7 или полосатые 9–15) определяются первым
+                  легальным забитым шаром после разбоя.</span>
               </div>
             </div>
             <div class="pool-rule-item">
               <span class="pool-rule-icon">🎯</span>
               <div class="pool-rule-info">
                 <strong>Шар №8 (Черный):</strong>
-                <span>Заказ лузы обязателен! Забивается только после того, как игрок забил все 7 шаров своей группы.</span>
+                <span>Заказ лузы обязателен! Забивается только после того, как игрок забил все 7 шаров своей
+                  группы.</span>
               </div>
             </div>
             <div class="pool-rule-item">
               <span class="pool-rule-icon">⚠️</span>
               <div class="pool-rule-info">
                 <strong>Фолы и поражение:</strong>
-                <span>При фоле соперник получает «Биток в руке». Забитие 8-ки раньше времени или падение битка вместе с 8-кой — мгновенное поражение!</span>
+                <span>При фоле соперник получает «Биток в руке». Забитие 8-ки раньше времени или падение битка вместе с
+                  8-кой — мгновенное поражение!</span>
               </div>
             </div>
           </div>
@@ -586,7 +613,8 @@
     <section id="screen-pool-game" class="screen screen-pool-active-game">
       <!-- Верхняя панель управления и навигации -->
       <div class="pool-top-nav">
-        <button type="button" class="back-btn pool-nav-btn" id="pool-game-back-btn" title="Выход в меню">← В меню</button>
+        <button type="button" class="back-btn pool-nav-btn" id="pool-game-back-btn" title="Выход в меню">← В
+          меню</button>
         <div class="pool-nav-title">🎱 8-Ball Pool</div>
         <div class="pool-nav-actions">
           <button type="button" class="pool-icon-btn" id="pool-sound-btn" title="Звук: Вкл/Выкл">🔊</button>
@@ -633,7 +661,8 @@
           <div class="pool-nominate-overlay hidden" id="pool-nominate-overlay"></div>
           <div class="pool-in-hand-banner hidden" id="pool-in-hand-banner">
             <span>✋ Перетащите белый шар в свободное место на столе</span>
-            <button type="button" class="btn btn-secondary pool-btn-place" id="pool-place-ball-btn">Поставить здесь</button>
+            <button type="button" class="btn btn-secondary pool-btn-place" id="pool-place-ball-btn">Поставить
+              здесь</button>
           </div>
         </div>
       </div>
@@ -642,9 +671,11 @@
       <div class="pool-controls-bar">
         <!-- Тонкая доводка угла прицела -->
         <div class="pool-fine-tune-group">
-          <button type="button" class="pool-tune-btn" id="pool-aim-left" title="Повернуть влево" aria-label="Повернуть влево">◀</button>
+          <button type="button" class="pool-tune-btn" id="pool-aim-left" title="Повернуть влево"
+            aria-label="Повернуть влево">◀</button>
           <span class="pool-tune-label">Прицел</span>
-          <button type="button" class="pool-tune-btn" id="pool-aim-right" title="Повернуть вправо" aria-label="Повернуть вправо">▶</button>
+          <button type="button" class="pool-tune-btn" id="pool-aim-right" title="Повернуть вправо"
+            aria-label="Повернуть вправо">▶</button>
         </div>
 
         <!-- Слайдер силы удара -->
@@ -682,12 +713,62 @@
       </div>
     </div>
 
+    <!-- ===== ЭКРАН 16: АЭРОХОККЕЙ (AIR HOCKEY 1v1) ===== -->
+    <section id="screen-airhockey" class="screen screen-airhockey">
+      <div class="airhockey-table-wrapper" id="airhockey-table-wrapper">
+        <div class="airhockey-canvas-container" id="airhockey-canvas-container">
+          <canvas id="airhockey-canvas" width="450" height="850"></canvas>
+
+          <!-- Боковые кнопки управления на центральной линии -->
+          <div class="airhockey-center-controls">
+            <button type="button" class="airhockey-btn-side" id="airhockey-back-btn" title="Выйти в меню"
+              aria-label="Выйти в меню">✕</button>
+            <button type="button" class="airhockey-btn-side" id="airhockey-reset-btn" title="Сбросить счет"
+              aria-label="Сбросить счет">🔄</button>
+            <button type="button" class="airhockey-btn-side" id="airhockey-sound-btn" title="Звук: Вкл/Выкл"
+              aria-label="Звук">🔊</button>
+            <button type="button" class="airhockey-btn-side" id="airhockey-bot-btn"
+              title="Бот для Красного игрока 2 (ПК/тест): Вкл/Выкл [Клавиша B]" aria-label="Бот">🤖</button>
+          </div>
+
+          <!-- Всплывающий баннер гола -->
+          <div class="airhockey-goal-banner hidden" id="airhockey-goal-banner">
+            <span class="airhockey-goal-text">ГОЛ!</span>
+          </div>
+
+          <!-- Подсказка управления на ПК / ноутбуке -->
+          <div class="airhockey-pc-hint" id="airhockey-pc-hint">
+            <!-- <span>💻 ПК: Красный — W/A/S/D или клик сверху | Синий — Стрелки или клик снизу | Кнопка 🤖 — Бот</span> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Модальное окно победы (Аэрохоккей) -->
+      <div id="airhockey-winner-modal" class="airhockey-modal-backdrop hidden" role="dialog" aria-modal="true">
+        <div class="airhockey-modal-card">
+          <div class="airhockey-winner-trophy pulse-anim">🏆</div>
+          <h2 class="airhockey-winner-title" id="airhockey-winner-title">Победа!</h2>
+          <p class="airhockey-winner-player" id="airhockey-winner-player-name">Синий игрок</p>
+          <div class="airhockey-winner-reason-box">
+            <p id="airhockey-winner-score-text">Итоговый счёт: 7 : 4</p>
+          </div>
+          <div class="airhockey-modal-actions">
+            <button type="button" id="airhockey-replay-btn"
+              class="airhockey-modal-btn airhockey-modal-btn--primary">Реванш 🔄</button>
+            <button type="button" id="airhockey-menu-btn" class="airhockey-modal-btn airhockey-modal-btn--ghost">← В
+              главное меню</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Всплывающее уведомление (Toast) -->
     <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
   </div>
 
   <script src="script.js"></script>
   <script src="pool.js?v=7"></script>
+  <script src="airhockey.js?v=9"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
@@ -696,4 +777,5 @@
     }
   </script>
 </body>
+
 </html>
