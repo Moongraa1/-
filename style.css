@@ -2694,52 +2694,65 @@ input:checked + .slider:before {
 
 /* Игровой экран Аэрохоккея */
 .screen-airhockey {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  background: #040712;
+  display: none !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #0d111e;
   overflow: hidden;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  z-index: 50;
 }
 
-.airhockey-table-wrapper {
-  flex: 1;
-  width: 100%;
-  height: 100%;
+.screen-airhockey.active {
+  display: flex !important;
+}
+
+#airhockey-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh; /* dvh строго обязательно для учета адресной строки на Android/iOS */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  position: relative;
+  background: #0d111e;
   overflow: hidden;
   touch-action: none;
+  padding: 8px; /* небольшой защитный отступ от краев экрана */
+  box-sizing: border-box;
 }
 
 .airhockey-canvas-container {
   position: relative;
-  height: 100%;
-  max-height: 100dvh;
+  width: min(calc(100vw - 16px), calc((100dvh - 16px) * 450 / 850));
+  height: min(calc(100dvh - 16px), calc((100vw - 16px) * 850 / 450));
   aspect-ratio: 450 / 850;
-  max-width: 100vw;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
   box-shadow: 
-    0 0 40px rgba(0, 240, 255, 0.2),
-    0 0 80px rgba(255, 0, 127, 0.15),
+    0 0 35px rgba(0, 240, 255, 0.25),
+    0 0 70px rgba(255, 0, 127, 0.2),
     inset 0 0 20px rgba(0, 0, 0, 0.9);
+  border-radius: 18px;
   overflow: hidden;
   background: #080d1e;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  flex-shrink: 0;
 }
 
 #airhockey-canvas {
   display: block;
   width: 100%;
   height: 100%;
+  border-radius: 18px;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;

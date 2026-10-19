@@ -1161,8 +1161,52 @@
     game.animFrameId = requestAnimationFrame(gameLoop);
   }
 
+  /* ===== 14. МАСШТАБИРОВАНИЕ СТОЛА ПОД ВЫТЯНУТЫЕ И МОБИЛЬНЫЕ ЭКРАНЫ ===== */
+  function resizeTable() {
+    const container = game.dom.container || document.getElementById("airhockey-container") || game.dom.screen;
+    const canvasContainer = game.dom.canvasContainer || document.getElementById("airhockey-canvas-container");
+    const canvas = game.dom.canvas || document.getElementById("airhockey-canvas");
+    if (!canvasContainer || !canvas) return;
+
+    // Определяем точные видимые размеры с учетом dvh и адресных строк
+    let availW = window.innerWidth;
+    let availH = window.innerHeight;
+
+    if (window.visualViewport) {
+      availW = window.visualViewport.width;
+      availH = window.visualViewport.height;
+    }
+
+    if (container) {
+      const rect = container.getBoundingClientRect();
+      if (rect.width > 50 && rect.height > 50) {
+        availW = rect.width;
+        availH = rect.height;
+      }
+    }
+
+    // 8px защитный отступ со всех сторон (16px суммарно)
+    const padding = 16;
+    const maxW = Math.max(100, availW - padding);
+    const maxH = Math.max(100, availH - padding);
+
+    // Строгий расчет масштаба: стол гарантированно полностью помещается в экран
+    // и по горизонтали, и по вертикали (никаких срезанных бортов и ворот!)
+    const scale = Math.min(maxW / TABLE_WIDTH, maxH / TABLE_HEIGHT);
+
+    const displayW = Math.round(TABLE_WIDTH * scale);
+    const displayH = Math.round(TABLE_HEIGHT * scale);
+
+    canvasContainer.style.width = displayW + "px";
+    canvasContainer.style.height = displayH + "px";
+
+    canvas.style.width = displayW + "px";
+    canvas.style.height = displayH + "px";
+  }
+
   function startGame() {
     game.active = true;
+    resizeTable();
     resetMatch();
     audio.init();
 
@@ -1178,9 +1222,11 @@
     }
   }
 
-  /* ===== 14. ИНИЦИАЛИЗАЦИЯ И ПРИВЯЗКА СОБЫТИЙ ===== */
+  /* ===== 15. ИНИЦИАЛИЗАЦИЯ И ПРИВЯЗКА СОБЫТИЙ ===== */
   function initAirHockey() {
     game.dom.screen = document.getElementById("screen-airhockey");
+    game.dom.container = document.getElementById("airhockey-container");
+    game.dom.canvasContainer = document.getElementById("airhockey-canvas-container");
     game.dom.canvas = document.getElementById("airhockey-canvas");
     game.dom.menuCard = document.getElementById("card-airhockey");
     game.dom.backBtn = document.getElementById("airhockey-back-btn");
@@ -1274,6 +1320,16 @@
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
 
+    // Слушатели изменения размера экрана и ориентации устройства
+    window.addEventListener("resize", resizeTable);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(resizeTable, 100);
+      setTimeout(resizeTable, 300);
+    });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", resizeTable);
+    }
+
     // Интеграция с window.showScreen для плавного переключения
     const origShowScreen = window.showScreen;
     if (origShowScreen) {
@@ -1283,6 +1339,7 @@
           if (game.dom.screen) {
             game.dom.screen.classList.add("active");
           }
+          resizeTable();
           startGame();
           return;
         }
@@ -1296,7 +1353,8 @@
       };
     }
 
-    // Первичная статическая отрисовка стола
+    // Первичный расчет геометрии и статическая отрисовка стола
+    resizeTable();
     render();
   }
 
